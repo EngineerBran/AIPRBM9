@@ -1,0 +1,85 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+    <title>User Information Form</title> 
+    <script> 
+        function displayUserData() { 
+            // Get input values 
+            var name = document.getElementsByName('name')[0].value; 
+            var surname = document.getElementsByName('surname')[0].value; 
+            var age = document.getElementById('age').value; 
+            var sex = document.querySelector('input[name="sex"]:checked').value; 
+            var hobbies = document.getElementsByName('hobby'); 
+            var selectedHobbies = []; 
+            for (var i = 0; i < hobbies.length; i++) { 
+                if (hobbies[i].checked) { 
+                    selectedHobbies.push(hobbies[i].value); 
+                } 
+            } 
+ 
+            // Prepare the message 
+            var message = "Name: " + name + "\n"; 
+            message += "Surname: " + surname + "\n"; 
+            message += "Age: " + age + "\n"; 
+            message += "Sex: " + sex + "\n"; 
+            message += "Hobbies: " + selectedHobbies.join(', '); 
+ 
+            // Display in a pop-up window 
+            alert(message); 
+        } 
+    </script> 
+    <style> 
+    #wrapper { 
+     display: table; 
+        width: 400px; 
+        border: 1px solid #0000; 
+    } 
+     
+    .tr { 
+     display:table-row; 
+    } 
+    .cell { 
+     border:1px solid black; 
+        display:table-cell 
+    } 
+    
+    </style> 
+</head> 
+<body> 
+<h2>User Information Form</h2> 
+    <div id="wrapper"> 
+        <div class="tr"> 
+            <div class="cell">Name:</div> 
+            <div class="cell"><input type="text" name="name"></div> 
+        </div> 
+        <div class="tr"> 
+            <div class="cell">Surname:</div> 
+            <div class="cell"><input type="text" name="surname"></div> 
+        </div> 
+        <div class="tr"> 
+            <div class="cell">Age:</div> 
+            <div class="cell"><input type="number" id="age" min="14"></div> 
+        </div> 
+        <div class="tr"> 
+            <div class="cell">Sex:</div> 
+            <div class="cell"> 
+                <input type="radio" name="sex" value="male"> Male 
+                <input type="radio" name="sex" value="female"> Female 
+            </div> 
+        </div> 
+        <div class="tr"> 
+            <div class="cell">Hobby:</div> 
+            <div class="cell"> 
+                <input type="checkbox" name="hobby" value="reading"> Reading 
+                <input type="checkbox" name="hobby" value="sports"> Sports 
+                <input type="checkbox" name="hobby" value="Dancing"> Dancing 
+                <input type="checkbox" name="hobby" value="Other"> Other 
+            </div> 
+        </div> 
+        <div class="tr"> 
+            <div class="cell"><input type="submit" value="OK" onclick="displayUserData()"></td> 
+            <td><input type="reset" value="Cancel"></td> 
+        </div> 
+    </div> 
+</body> 
+</html>

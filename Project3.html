@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Numbers</title>
+</head>
+<body>
+    <h1>Random Numbers between 0 and 1000</h1>
+    <button onclick="generateAndSort('quick')">Generate and Quick Sort</button>
+    <button onclick="generateAndSort('bubble')">Generate and Bubble Sort</button>
+    <div id="result"></div>
+
+    <script>
+        // Function to generate random numbers
+        function generateRandomNumbers(count, min, max) {
+            let randomNumbers = [];
+            for (let i = 0; i < count; i++) {
+                randomNumbers.push(Math.floor(Math.random() * (max - min + 1)) + min);
+            }
+            return randomNumbers;
+        }
+
+        // Quick sort algorithm
+        function quickSort(arr) {
+            if (arr.length <= 1) {
+                return arr;
+            }
+
+            const pivot = arr[arr.length - 1];
+            const left = [];
+            const right = [];
+
+            for (let i = 0; i < arr.length - 1; i++) {
+                if (arr[i] < pivot) {
+                    left.push(arr[i]);
+                } else {
+                    right.push(arr[i]);
+                }
+            }
+
+            return [...quickSort(left), pivot, ...quickSort(right)];
+        }
+
+        // Bubble sort algorithm
+        function bubbleSort(arr) {
+            const length = arr.length;
+            for (let i = 0; i < length - 1; i++) {
+                for (let j = 0; j < length - 1 - i; j++) {
+                    if (arr[j] > arr[j + 1]) {
+                        const temp = arr[j];
+                        arr[j] = arr[j + 1];
+                        arr[j + 1] = temp;
+                    }
+                }
+            }
+            return arr;
+        }
+
+        // Function to generate and sort random numbers
+        function generateAndSort(sortType) {
+            const startTime = performance.now();
+            const randomNumbers = generateRandomNumbers(500, 0, 1000);
+            let sortedNumbers;
+
+            if (sortType === 'quick') {
+                sortedNumbers = quickSort(randomNumbers);
+            } else if (sortType === 'bubble') {
+                sortedNumbers = bubbleSort(randomNumbers);
+            } else {
+                alert("Invalid sorting algorithm");
+                return;
+            }
+
+            const endTime = performance.now();
+            const executionTime = endTime - startTime;
+
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = "<h2>Execution Time: " + executionTime.toFixed(2) + " milliseconds</h2><h2>First 30 numbers:</h2><pre>" + sortedNumbers.slice(0, 30).join(', ') + "</pre><h2>Last 30 numbers:</h2><pre>" + sortedNumbers.slice(-30).join(', ') + "</pre>";
+        }
+    </script>
+</body>
+</html>

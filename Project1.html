@@ -1,0 +1,70 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+    <title>User Information Form</title> 
+    <script> 
+        function displayUserData() { 
+            // Get input values 
+            var name = document.getElementsByName('name')[0].value; 
+            var surname = document.getElementsByName('surname')[0].value; 
+            var age = document.getElementById('age').value; 
+            var sex = document.querySelector('input[name="sex"]:checked').value; 
+            var hobbies = document.getElementsByName('hobby'); 
+            var selectedHobbies = []; 
+            for (var i = 0; i < hobbies.length; i++) { 
+                if (hobbies[i].checked) { 
+                    selectedHobbies.push(hobbies[i].value); 
+                } 
+            } 
+ 
+            // Prepare the message 
+            var message = "Name: " + name + "\n"; 
+            message += "Surname: " + surname + "\n"; 
+            message += "Age: " + age + "\n"; 
+            message += "Sex: " + sex + "\n"; 
+            message += "Hobbies: " + selectedHobbies.join(', '); 
+ 
+            // Display in a pop-up window 
+            alert(message); 
+        } 
+    </script> 
+</head> 
+<body> 
+<h2>User Information Form</h2> 
+    <table border="1"> 
+        <tr> 
+BRANDON MAKONI 317159 
+            <td>Name:</td> 
+            <td><input type="text" name="name"></td> 
+        </tr> 
+        <tr> 
+            <td>Surname:</td> 
+            <td><input type="text" name="surname"></td> 
+        </tr> 
+        <tr> 
+            <td>Age:</td> 
+            <td><input type="number" id="age" min="14"></td> 
+        </tr> 
+        <tr> 
+            <td>Sex:</td> 
+            <td> 
+                <input type="radio" name="sex" value="male"> Male 
+                <input type="radio" name="sex" value="female"> Female 
+            </td> 
+        </tr> 
+        <tr> 
+            <td>Hobby:</td> 
+            <td> 
+                <input type="checkbox" name="hobby" value="reading"> Reading 
+                <input type="checkbox" name="hobby" value="sports"> Sports 
+                <input type="checkbox" name="hobby" value="Dancing"> Dancing 
+                <input type="checkbox" name="hobby" value="Other"> Other 
+            </td> 
+        </tr> 
+        <tr> 
+            <td><input type="submit" value="OK" onclick="displayUserData()"></td> 
+            <td><input type="reset" value="Cancel"></td> 
+        </tr> 
+    </table> 
+</body> 
+</html>

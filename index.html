@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Page with Projects</title>
+    <!-- Include jqxTree CSS and jqxcore scripts -->
+    <link rel="stylesheet" href="https://jqwidgets.com/public/jqwidgets/styles/jqx.base.css" type="text/css" />
+    <script type="text/javascript" src="https://jqwidgets.com/public/jqwidgets/jqx-all.js"></script>
+    <!-- End jqxTree CSS and scripts -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-route.js"></script>
+    <style>
+        /* Add your custom styles here */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        main {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+        }
+
+        #treeMenu {
+            width: 250px;
+        }
+
+        .description {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Project Page</h1>
+        <div class="description">
+            <!-- Content Projection for header description -->
+            <header-description></header-description>
+        </div>
+    </header>
+
+    <main ng-controller="MenuController">
+        <!-- Tree menu will be rendered here -->
+        <div id="treeMenu">
+            <ul>
+                <li ng-repeat="item in menuItems">
+                    <a href="#" ng-click="selectItem(item)">{{item.label}}</a>
+                    <ul ng-if="item.items">
+                        <li ng-repeat="subItem in item.items">
+                            <a href="#" ng-click="selectItem(subItem)">{{subItem.label}}</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="description" ng-view id="projectDescription">
+            <!-- Multi-slot Content Projection for project description -->
+            <project-description>
+                <div ng-view></div>
+            </project-description>
+        </div>
+    </main>
+
+    <script>
+        // Define the AngularJS module
+        var app = angular.module('myApp', ['ngRoute']);
+
+        // Configure AngularJS routes
+        app.config(function($routeProvider) {
+            $routeProvider
+                .when('/', {
+                    templateUrl: 'home.html'
+                })
+                .when('/project1', {
+                    templateUrl: 'project1.html'
+                })
+                .when('/project2', {
+                    templateUrl: 'project2.html'
+                })
+                .when('/project3', {
+                    templateUrl: 'project3.html'
+                })
+                .otherwise({
+                    redirectTo: '/'
+                });
+        });
+
+        // Define the AngularJS controller
+        app.controller('MenuController', function($scope, $location) {
+            // Your JSON data for the menu
+            $scope.menuItems = [
+                {
+                    "label": "Tasks",
+                    "items": [
+                        { "label": "Project 1", "link": "/project1" },
+                        { "label": "Project 2", "link": "/project2" },
+                        { "label": "Project 3", "link": "/project3" }
+                    ]
+                }
+            ];
+
+            // Function to handle item selection
+            $scope.selectItem = function(item) {
+                // Update the URL based on the selected project link
+                $location.path(item.link);
+            };
+        });
+
+        // Define directive for single-slot content projection
+        app.directive('headerDescription', function() {
+            return {
+                restrict: 'E',
+                transclude: true,
+                template: '<p>This website shows all the projects I have completed so far in my Advanced Internet Programming class. It contains three projects which will execute all their tasks as I was instructed by the professor. Please click on each project below to expand it.</p>',
+                replace: true
+            };
+        });
+
+        // Define directive for multi-slot content projection
+        app.directive('projectDescription', function() {
+            return {
+                restrict: 'E',
+                transclude: {
+                    'projectContent': '?ngView'
+                },
+                template: '<div class="description" ng-transclude="projectContent"></div>',
+                replace: true
+            };
+        });
+    </script>
+
+</body>
+</html>
