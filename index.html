@@ -16,6 +16,7 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
+            background-color: purple; /* Change background color to purple */
         }
 
         header {
@@ -41,6 +42,14 @@
             max-width: 600px;
             margin: 0 auto;
         }
+
+        .menu-box {
+            background-color: #fff;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body>
@@ -56,6 +65,9 @@
     <main ng-controller="MenuController">
         <!-- Tree menu will be rendered here -->
         <div id="treeMenu">
+            <div class="menu-box"> <!-- Added box here -->
+                <p>Menu Box Content</p>
+            </div>
             <ul>
                 <li ng-repeat="item in menuItems">
                     <a href="#" ng-click="selectItem(item)">{{item.label}}</a>
